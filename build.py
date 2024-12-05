@@ -85,10 +85,9 @@ def main():
     if not os.path.exists(PATH_BUILDS):
         os.makedirs(PATH_BUILDS)
 
-    # Fetch frida information.
-    frida_release = "1.8"
-    frida_release = "1.8"
-
+    # Version is now managed by git tags
+    frida_release = "1.8"  # This should match your git tag without the 'v' prefix
+    
     print(f"MagiskFurtif version is {frida_release}.")
         
     # Create flashable modules.
