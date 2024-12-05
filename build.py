@@ -86,7 +86,7 @@ def main():
         os.makedirs(PATH_BUILDS)
 
     # Version is now managed by git tags
-    frida_release = "1.8"  # This should match your git tag without the 'v' prefix
+    frida_release = "1.9"  # Update to match your desired version
     
     print(f"MagiskFurtif version is {frida_release}.")
         
@@ -94,6 +94,7 @@ def main():
     create_module(frida_release)
 
     print("Done. Only zip file remains in builds directory.")
+
 
 
 if __name__ == "__main__":
