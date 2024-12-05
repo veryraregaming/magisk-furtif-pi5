@@ -111,6 +111,62 @@ Refer to `base/furtifconfig.txt` in the repository for an example configuration.
 3. **Logs**:
    - Use `logcat` to debug errors related to startup or app interactions.
 
+### Checking and Setting Device Resolution and DPI
+The script is based on the default resolution and DPI for Raspberry Pi 5 devices, which are expected to be:
+
+- **Resolution**: `1920x1080`
+- **DPI**: `240`
+
+If these values do not match, you may encounter issues with UI interactions. Follow these steps to verify and set them:
+
+1. **Check Resolution**:
+   - Run the following ADB command:
+     ```bash
+     adb shell wm size
+     ```
+     Example output:
+     ```
+     Physical size: 1920x1080
+     ```
+
+2. **Check DPI**:
+   - Run the following ADB command:
+     ```bash
+     adb shell wm density
+     ```
+     Example output:
+     ```
+     Physical density: 240
+     ```
+
+3. **Set Resolution and DPI**:
+   - If the values are not correct, set them to the default values using these commands:
+     ```bash
+     adb shell wm size 1920x1080
+     adb shell wm density 240
+     ```
+
+4. **Reset to Defaults**:
+   - If you've made changes and want to reset to the original settings:
+     ```bash
+     adb shell wm size reset
+     adb shell wm density reset
+     ```
+
+5. **Verify Changes**:
+   - Recheck the resolution and DPI using:
+     ```bash
+     adb shell wm size && adb shell wm density
+     ```
+
+6. **Detailed Display Information**:
+   - For full display details, run:
+     ```bash
+     adb shell dumpsys display | findstr "mBaseDisplayInfo"
+     ```
+
+---
+
 ### Binary Directory Setup
 Depending on your device, you may need to modify the Termux binary path:
 

@@ -30,3 +30,7 @@
 
 ## 5. Reboot Your Device
 - Reboot your device to apply the changes.
+
+## Troubleshooting Resolution and DPI Issues
+If you encounter issues with UI interactions, check that your device's resolution and DPI are correctly configured. 
+Refer to the [Troubleshooting Section in the README](./README.md#checking-and-setting-device-resolution-and-dpi) for detailed steps.
