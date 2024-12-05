@@ -15,22 +15,28 @@ while [ "$(getprop sys.boot_completed)" != "1" ]; do
 done
 sleep "$BOOT_DELAY"
 
-# Function to send or update Discord messages with a timestamp
+# Function to send or update Discord messages with a timestamp and device name
 send_discord_message() {
     if [ "$USEDISCORD" = true ]; then
         # Get the current date and time
         TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 
-        # Create the message content with the timestamp
-        MESSAGE_CONTENT="$1 (Last updated: $TIMESTAMP)"
+        # Create the message content with the device name and timestamp
+        MESSAGE_CONTENT="$1 (Device: $DEVICENAME | Last updated: $TIMESTAMP)"
 
         if [ -z "$MESSAGE_ID" ]; then
             # Send a new message if MESSAGE_ID is not set
             response=$(curl -s -X POST -H "Content-Type: application/json" \
                 -d "{\"content\": \"$MESSAGE_CONTENT\"}" "$DISCORD_WEBHOOK_URL")
-            # Extract and save the message ID from the response (assuming the webhook supports it)
+            
+            # Extract and save the message ID from the response (if the webhook supports it)
             MESSAGE_ID=$(echo "$response" | jq -r '.id')
-            echo "Discord message sent. Message ID: $MESSAGE_ID"
+            
+            if [ "$MESSAGE_ID" != "null" ]; then
+                echo "Discord message sent. Message ID: $MESSAGE_ID"
+            else
+                echo "Failed to send Discord message. Response: $response"
+            fi
         else
             # Update the existing message if MESSAGE_ID is set
             curl -s -X PATCH -H "Content-Type: application/json" \
@@ -39,8 +45,6 @@ send_discord_message() {
         fi
     fi
 }
-
-
 # Function to check if apps are running
 check_device_status() {
     PidPOGO=$(pidof "$POGO_PACKAGE_NAME")
